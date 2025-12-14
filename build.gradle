@@ -1,0 +1,10 @@
+subprojects {
+
+    group = 'io.github.followsclosely'
+    version = '1.0.0'
+
+    repositories {
+        mavenCentral()
+    }
+
+}
