@@ -1,5 +1,7 @@
 package io.github.followsclosely.toolbox.web.cache;
 
+import java.util.Arrays;
+
 /**
  * Stores a per-thread hint for disk caching, allowing human-readable cache file names.
  */
@@ -14,7 +16,12 @@ public class DiskCachingHint {
         hint.set(value);
     }
     public static void set(String... value) {
-        hint.set(String.join("-", value));
+
+        String[] cleaned = Arrays.stream(value)
+                .map(token -> token.replaceAll("[^a-zA-Z0-9._-]", "_"))
+                .toArray(String[]::new);
+
+        hint.set(String.join("/", cleaned));
     }
 
     /**
