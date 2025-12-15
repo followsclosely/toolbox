@@ -85,6 +85,8 @@ public class DiskCachingClientHttpRequestInterceptor implements ClientHttpReques
             return new CachedClientHttpResponse(HttpStatusCode.valueOf(200), headers, cachedBody);
         }
 
+        Files.createDirectories(bodyFile.getParent());
+
         // If there is a rate limiter, wait as needed before making real request
         if (rateLimiter != null) {
             rateLimiter.waitAsNeeded();
@@ -143,8 +145,7 @@ public class DiskCachingClientHttpRequestInterceptor implements ClientHttpReques
     private String createCacheKey(HttpRequest request) {
         String hint = DiskCachingHint.get();
         if (hint != null && !hint.isBlank()) {
-            // Sanitize hint for filesystem (remove/replace unsafe chars)
-            return hint.replaceAll("[^a-zA-Z0-9._-]", "_");
+            return hint;
         }
         String rawKey = request.getMethod() + " " + request.getURI();
         return DigestUtils.md5DigestAsHex(rawKey.getBytes(StandardCharsets.UTF_8));
