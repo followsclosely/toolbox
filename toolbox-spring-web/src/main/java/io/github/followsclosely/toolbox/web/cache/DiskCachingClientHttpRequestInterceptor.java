@@ -70,7 +70,7 @@ public class DiskCachingClientHttpRequestInterceptor implements ClientHttpReques
 
         // Cache HIT: load body + headers from disk
         if (Files.exists(bodyFile) && Files.exists(headersFile)) {
-            log.info("Cache HIT (disk): {} {}", request.getMethod(), request.getURI());
+            //log.info("Cache HIT (disk): {} {}", request.getMethod(), request.getURI());
 
             byte[] cachedBody = Files.readAllBytes(bodyFile);
 
@@ -93,7 +93,7 @@ public class DiskCachingClientHttpRequestInterceptor implements ClientHttpReques
         }
 
         // Cache MISS: real request
-        log.info("Cache MISS: {} {}", request.getMethod(), request.getURI());
+        //log.info("Cache MISS: {} {}", request.getMethod(), request.getURI());
         ClientHttpResponse realResponse = execution.execute(request, body);
 
         // Read body once
@@ -113,7 +113,7 @@ public class DiskCachingClientHttpRequestInterceptor implements ClientHttpReques
             headerProps.store(os, "Cached response headers");
         }
 
-        log.info("Saved response to disk (body + headers)");
+        //log.info("Saved response to disk (body + headers)");
 
         // If there is a rate limiter, reset last call time after the real request
         if (rateLimiter != null) {

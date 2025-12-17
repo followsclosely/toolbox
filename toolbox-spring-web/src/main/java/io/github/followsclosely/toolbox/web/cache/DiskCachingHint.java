@@ -16,7 +16,6 @@ public class DiskCachingHint {
         hint.set(value);
     }
     public static void set(String... value) {
-
         String[] cleaned = Arrays.stream(value)
                 .map(token -> token.replaceAll("[^a-zA-Z0-9._-]", "_"))
                 .toArray(String[]::new);
