@@ -7,4 +7,12 @@ subprojects {
         mavenCentral()
     }
 
+    plugins.withType(JavaPlugin) {
+        java {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(17)
+            }
+        }
+    }
+
 }
